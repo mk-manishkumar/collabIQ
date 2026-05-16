@@ -1,3 +1,0 @@
-# CollabIQ
-
-> Project is still ongoing... 
