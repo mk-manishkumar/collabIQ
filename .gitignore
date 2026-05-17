@@ -1,0 +1,31 @@
+# Python
+server/venv/
+server/__pycache__/
+server/*.pyc
+server/.pytest_cache/
+
+# Environment variables
+server/.env
+client/.env
+.env
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Build folders
+dist/
+build/
+
+# Node / Next (future)
+client/node_modules/
+client/.next/
+client/out/
+
+# Python cache
+**/__pycache__/
