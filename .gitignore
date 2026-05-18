@@ -1,4 +1,8 @@
-# Python
+# Node.js
+server/node_modules/
+server/dist/
+
+# Python (legacy - can be removed once venv is deleted)
 server/venv/
 server/__pycache__/
 server/*.pyc
@@ -22,7 +26,7 @@ client/.env
 dist/
 build/
 
-# Node / Next (future)
+# Node / Next
 client/node_modules/
 client/.next/
 client/out/
