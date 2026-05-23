@@ -8,9 +8,19 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  clerkId   String?  @unique
-  email     String   @unique
-  username  String
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+
+  // Clerk
+  clerkId     String   @unique
+  email       String   @unique
+
+  // Profile
+  username    String?  @unique
+  fullName    String?
+  bio         String?
+  avatarUrl   String?
+
+  // Metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

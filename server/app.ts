@@ -3,6 +3,8 @@ import cors from "cors";
 
 import { prisma } from "./src/db/database.js";
 import { config } from "./src/core/config.js";
+import userRoutes from "./src/modules/user/user.route.js";
+import { auth } from "./src/middleware/auth.middleware.js";
 
 const app = express();
 
@@ -17,6 +19,7 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(auth);
 
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
@@ -41,5 +44,8 @@ app.get("/db-test", async (_req: Request, res: Response) => {
     });
   }
 });
+
+// Routes
+app.use("/api/v1/user", userRoutes);
 
 export default app;
