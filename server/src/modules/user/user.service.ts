@@ -1,5 +1,9 @@
 import { prisma } from "../../db/database.js";
 
+/**
+ * Create new user after Clerk signup
+ * If user already exists, return existing record
+ */
 export const createUser = async (clerkId: string, email: string) => {
   return prisma.user.upsert({
     where: {
@@ -15,6 +19,9 @@ export const createUser = async (clerkId: string, email: string) => {
   });
 };
 
+/**
+ * Fetch current authenticated user's profile
+ */
 export const getProfile = async (clerkId: string) => {
   return prisma.user.findUnique({
     where: {
@@ -23,8 +30,13 @@ export const getProfile = async (clerkId: string) => {
   });
 };
 
+/**
+ * Update editable profile fields
+ * (username, bio, full name, etc.)
+ */
 export const updateProfile = async (
   clerkId: string,
+
   data: {
     username?: string;
     bio?: string;
@@ -40,6 +52,10 @@ export const updateProfile = async (
   });
 };
 
+/**
+ * Permanently delete user profile
+ * Removes user record from database
+ */
 export const deleteProfile = async (clerkId: string) => {
   return prisma.user.delete({
     where: {

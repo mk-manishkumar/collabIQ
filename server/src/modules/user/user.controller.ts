@@ -1,8 +1,13 @@
 import { Request, Response } from "express";
 import { getAuth } from "@clerk/express";
 import * as service from "./user.service.js";
+import { asyncHandler } from "../../middleware/asyncHandler.js";
 
-export const syncUser = async (req: Request, res: Response) => {
+/**
+ * Sync Clerk user with database
+ * Creates user if not already stored
+ */
+export const syncUser = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
   if (!userId) {
@@ -16,9 +21,12 @@ export const syncUser = async (req: Request, res: Response) => {
   const user = await service.createUser(userId, email);
 
   return res.json(user);
-};
+});
 
-export const profile = async (req: Request, res: Response) => {
+/**
+ * Return current authenticated user's profile
+ */
+export const profile = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
   if (!userId) {
@@ -30,9 +38,13 @@ export const profile = async (req: Request, res: Response) => {
   const user = await service.getProfile(userId);
 
   return res.json(user);
-};
+});
 
-export const editProfile = async (req: Request, res: Response) => {
+/**
+ * Update editable user profile information
+ * (username, bio, fullName, avatar, etc.)
+ */
+export const editProfile = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
   if (!userId) {
@@ -44,9 +56,13 @@ export const editProfile = async (req: Request, res: Response) => {
   const user = await service.updateProfile(userId, req.body);
 
   return res.json(user);
-};
+});
 
-export const deleteProfile = async (req: Request, res: Response) => {
+/**
+ * Permanently remove authenticated user
+ * Deletes profile record from database
+ */
+export const deleteProfile = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
   if (!userId) {
@@ -60,4 +76,4 @@ export const deleteProfile = async (req: Request, res: Response) => {
   return res.json({
     success: true,
   });
-};
+});

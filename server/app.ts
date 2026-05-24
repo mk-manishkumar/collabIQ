@@ -3,8 +3,10 @@ import cors from "cors";
 
 import { prisma } from "./src/db/database.js";
 import { config } from "./src/core/config.js";
-import userRoutes from "./src/modules/user/user.route.js";
+import { errorMiddleware } from "./src/middleware/error.middleware.js";
 import { auth } from "./src/middleware/auth.middleware.js";
+import userRoutes from "./src/modules/user/user.route.js";
+import workspaceRoutes from "./src/modules/workspace/workspace.route.js";
 
 const app = express();
 
@@ -47,5 +49,9 @@ app.get("/db-test", async (_req: Request, res: Response) => {
 
 // Routes
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/user", workspaceRoutes);
+
+// Global error handler
+app.use(errorMiddleware);
 
 export default app;
