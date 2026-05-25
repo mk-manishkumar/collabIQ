@@ -22,15 +22,7 @@ export const getProfile = (clerkId: string) => {
 /**
  * Update editable profile information.
  */
-export const updateProfile = (
-  clerkId: string,
-  data: {
-    username?: string;
-    bio?: string;
-    fullName?: string;
-    avatarUrl?: string;
-  },
-) => {
+export const updateProfile = (clerkId: string, data: { username?: string; bio?: string; fullName?: string; avatarUrl?: string }) => {
   return User.findOneAndUpdate({ clerkId }, data, { new: true });
 };
 

@@ -5,13 +5,7 @@ import { Workspace } from "./workspace.model.js";
  * and assign the authenticated
  * user as the owner.
  */
-export const createWorkspace = (
-  clerkId: string,
-  data: {
-    name: string;
-    description?: string;
-  },
-) => {
+export const createWorkspace = (clerkId: string, data: { name: string; description?: string }) => {
   return Workspace.create({
     name: data.name,
     description: data.description,
