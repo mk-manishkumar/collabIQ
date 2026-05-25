@@ -4,29 +4,25 @@
   "description": "CollabIQ API Server",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon --watch . --exec tsx server.ts",
+    "dev": "tsx watch server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "type-check": "tsc --noEmit",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:push": "prisma db push",
-    "db:studio": "prisma studio"
+    "clean": "rmdir /s /q dist",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@clerk/express": "^2.1.21",
-    "@prisma/client": "^6.19.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^8"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.0",
-    "nodemon": "^3.1.14",
-    "prisma": "^6.19.3",
     "tsx": "^4.22.2",
-    "typescript": "^6.0.3"
+    "typescript": "^6"
   }
 }
