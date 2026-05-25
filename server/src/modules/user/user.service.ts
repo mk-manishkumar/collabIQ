@@ -1,65 +1,42 @@
-import { prisma } from "../../db/database.js";
+import { User } from "./user.model.js";
 
 /**
- * Create new user after Clerk signup
- * If user already exists, return existing record
+ * Create a new user after Clerk authentication.
+ * Returns the existing user if already registered.
  */
 export const createUser = async (clerkId: string, email: string) => {
-  return prisma.user.upsert({
-    where: {
-      clerkId,
-    },
+  const existingUser = await User.findOne({ clerkId });
 
-    update: {},
+  if (existingUser) return existingUser;
 
-    create: {
-      clerkId,
-      email,
-    },
-  });
+  return User.create({ clerkId, email });
 };
 
 /**
- * Fetch current authenticated user's profile
+ * Retrieve the authenticated user's profile.
  */
-export const getProfile = async (clerkId: string) => {
-  return prisma.user.findUnique({
-    where: {
-      clerkId,
-    },
-  });
+export const getProfile = (clerkId: string) => {
+  return User.findOne({ clerkId });
 };
 
 /**
- * Update editable profile fields
- * (username, bio, full name, etc.)
+ * Update editable profile information.
  */
-export const updateProfile = async (
+export const updateProfile = (
   clerkId: string,
-
   data: {
     username?: string;
     bio?: string;
     fullName?: string;
+    avatarUrl?: string;
   },
 ) => {
-  return prisma.user.update({
-    where: {
-      clerkId,
-    },
-
-    data,
-  });
+  return User.findOneAndUpdate({ clerkId }, data, { new: true });
 };
 
 /**
- * Permanently delete user profile
- * Removes user record from database
+ * Delete the authenticated user's profile permanently.
  */
-export const deleteProfile = async (clerkId: string) => {
-  return prisma.user.delete({
-    where: {
-      clerkId,
-    },
-  });
+export const deleteProfile = (clerkId: string) => {
+  return User.findOneAndDelete({ clerkId });
 };

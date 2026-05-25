@@ -6,6 +6,7 @@ import { auth } from "./src/middleware/auth.middleware.js";
 import { errorMiddleware } from "./src/middleware/error.middleware.js";
 import userRoutes from "./src/modules/user/user.route.js";
 import workspaceRoutes from "./src/modules/workspace/workspace.route.js";
+import channelRoutes from "./src/modules/channel/channel.route.js";
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get("/", (_req: Request, res: Response) => {
 // Routes
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/workspace", workspaceRoutes);
+app.use("/api/v1/channel", channelRoutes);
 
 // Global error handler
 app.use(errorMiddleware);

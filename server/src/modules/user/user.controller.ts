@@ -10,11 +10,7 @@ import { asyncHandler } from "../../middleware/asyncHandler.js";
 export const syncUser = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
-  if (!userId) {
-    return res.status(401).json({
-      message: "Unauthorized",
-    });
-  }
+  if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
   const email = req.body.email;
 
@@ -29,11 +25,7 @@ export const syncUser = asyncHandler(async (req: Request, res: Response) => {
 export const profile = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
-  if (!userId) {
-    return res.status(401).json({
-      message: "Unauthorized",
-    });
-  }
+  if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
   const user = await service.getProfile(userId);
 
@@ -47,11 +39,7 @@ export const profile = asyncHandler(async (req: Request, res: Response) => {
 export const editProfile = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
-  if (!userId) {
-    return res.status(401).json({
-      message: "Unauthorized",
-    });
-  }
+  if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
   const user = await service.updateProfile(userId, req.body);
 
@@ -65,15 +53,9 @@ export const editProfile = asyncHandler(async (req: Request, res: Response) => {
 export const deleteProfile = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
-  if (!userId) {
-    return res.status(401).json({
-      message: "Unauthorized",
-    });
-  }
+  if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
   await service.deleteProfile(userId);
-
-  return res.json({
-    success: true,
-  });
+  
+  return res.json({ success: true });
 });

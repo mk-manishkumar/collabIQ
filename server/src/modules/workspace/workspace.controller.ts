@@ -10,11 +10,7 @@ import { asyncHandler } from "../../middleware/asyncHandler.js";
 export const create = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
-  if (!userId) {
-    return res.status(401).json({
-      message: "Unauthorized",
-    });
-  }
+  if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
   const workspace = await service.createWorkspace(userId, req.body);
 
@@ -27,11 +23,7 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 export const all = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
 
-  if (!userId) {
-    return res.status(401).json({
-      message: "Unauthorized",
-    });
-  }
+  if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
   const workspaces = await service.getWorkspaces(userId);
 
@@ -58,7 +50,5 @@ export const remove = asyncHandler(async (req: Request, res: Response) => {
 
   await service.deleteWorkspace(id);
 
-  return res.json({
-    success: true,
-  });
+  return res.json({ success: true });
 });

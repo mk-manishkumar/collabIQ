@@ -1,58 +1,46 @@
-import { prisma } from "../../db/database.js";
+import { Workspace } from "./workspace.model.js";
 
 /**
- * Create new workspace
- * Assign authenticated user as workspace owner
+ * Create a new workspace
+ * and assign the authenticated
+ * user as the owner.
  */
-export const createWorkspace = async (
+export const createWorkspace = (
   clerkId: string,
-
   data: {
     name: string;
     description?: string;
   },
 ) => {
-  return prisma.workspace.create({
-    data: {
-      name: data.name,
-
-      description: data.description,
-
-      ownerId: clerkId,
-    },
+  return Workspace.create({
+    name: data.name,
+    description: data.description,
+    ownerId: clerkId,
   });
 };
 
 /**
- * Return all workspaces owned by current user
+ * Retrieve all workspaces
+ * owned by the authenticated user.
  */
-export const getWorkspaces = async (clerkId: string) => {
-  return prisma.workspace.findMany({
-    where: {
-      ownerId: clerkId,
-    },
+export const getWorkspaces = (clerkId: string) => {
+  return Workspace.find({
+    ownerId: clerkId,
   });
 };
 
 /**
- * Fetch single workspace details using workspace ID
+ * Retrieve a workspace
+ * by its unique ID.
  */
-export const getWorkspace = async (id: string) => {
-  return prisma.workspace.findUnique({
-    where: {
-      id,
-    },
-  });
+export const getWorkspace = (id: string) => {
+  return Workspace.findById(id);
 };
 
 /**
- * Permanently delete workspace
- * Removes workspace record from database
+ * Permanently delete
+ * a workspace by ID.
  */
-export const deleteWorkspace = async (id: string) => {
-  return prisma.workspace.delete({
-    where: {
-      id,
-    },
-  });
+export const deleteWorkspace = (id: string) => {
+  return Workspace.findByIdAndDelete(id);
 };
